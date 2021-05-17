@@ -1,6 +1,8 @@
 import React, { Component } from "react";
 import ParticlesBg from "particles-bg";
 import Fade from "react-reveal";
+import Particle from "./Particle";
+
 
 class Header extends Component {
   constructor(props) {
@@ -22,9 +24,8 @@ class Header extends Component {
     const description = this.props.data.description;
 
     return (
-      
       <header id="home">
-        <ParticlesBg type="circle" bg={true} />
+        <Particle />
 
         <nav id="nav-wrap">
           <a className="mobile-btn" href="#nav-wrap" title="Show navigation">
