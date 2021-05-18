@@ -7,13 +7,10 @@
     "contactmessage":"Here is where you should write your message to readers to have them get in contact with you.",
     "email": "calebgengoh@gmail.com",
     "phone": "555-555-5555",
-    "github":"https://github.com/heze8/CalebGoh",
-    "project":"https://github.com/heze8",
+    "github":"https://github.com/heze8",
+    "project":"https://github.com/heze8/CalebGoh",
     "address":{
-      "street":"(Your Street)",
-      "city":"(Your City)",
-      "state":"(Your State)",
-      "zip": "(Your Zip/Postal Code)"
+      "city":"Singapore"
     },
     "website": "http://www.timbakerdev.com",
     "resumedownload":"http://timbakerdev.com",
