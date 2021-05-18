@@ -105,7 +105,7 @@ export default class Canvas extends React.Component {
     if (bg === true) {
       style = Object.assign(style, {
         position: "absolute",
-        zIndex: -1,
+        zIndex: 0,
         top: 0,
         left: 0,
         opacity: 0.8

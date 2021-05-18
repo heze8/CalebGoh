@@ -6,11 +6,10 @@ import Particle from "./Particle";
 class Header extends Component {
   constructor(props) {
     super(props);
-    this.particle = document.getElementById("particle");
 
   }
 
-
+  
   render() {
     if (!this.props.data) return null;
     
@@ -20,7 +19,7 @@ class Header extends Component {
     const description = this.props.data.description;
 
     return (
-      <header id="home" onMouseMove={this.handleMouseMovement}>
+      <header id="home">
         <Particle id="particle"/>
 
         <nav id="nav-wrap">
