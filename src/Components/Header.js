@@ -1,5 +1,4 @@
 import React, { Component } from "react";
-import ParticlesBg from "particles-bg";
 import Fade from "react-reveal";
 import Particle from "./Particle";
 
@@ -7,14 +6,11 @@ import Particle from "./Particle";
 class Header extends Component {
   constructor(props) {
     super(props);
+    this.particle = document.getElementById("particle");
 
-    this.state = { x: 0, y: 0 };
   }
 
-  _onMouseMove(e) {
-    this.setState({ x: e.screenX, y: e.screenY });
-  }
-  
+
   render() {
     if (!this.props.data) return null;
     
@@ -24,8 +20,8 @@ class Header extends Component {
     const description = this.props.data.description;
 
     return (
-      <header id="home">
-        <Particle />
+      <header id="home" onMouseMove={this.handleMouseMovement}>
+        <Particle id="particle"/>
 
         <nav id="nav-wrap">
           <a className="mobile-btn" href="#nav-wrap" title="Show navigation">
@@ -90,7 +86,7 @@ class Header extends Component {
           </div>
         </div>
 
-        <p className="scrolldown">
+        <p className="scrolldown" >
           <a className="smoothscroll" href="#about">
             <i className="icon-down-circle"></i>
           </a>

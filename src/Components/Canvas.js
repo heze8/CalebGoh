@@ -25,9 +25,8 @@ export default class Canvas extends React.Component {
 
     if (this.props.globalCompositeOperation) {
       const context = canvas.getContext("2d");
-      context.globalCompositeOperation = this.props.globalCompositeOperation;
+      context.globalCompositeOperation = 'lighten';
     }
-
     const { width, height } = this.setCanvasSize(canvas);
     this.heartbeatDetectionCanvasSize(canvas);
     this.props.onCanvasInited(canvas, width, height);
@@ -51,7 +50,12 @@ export default class Canvas extends React.Component {
   }
 
   componentWillUnmount() {
-    window.removeEventListener("resize", this.resize);
+    try{
+      window.removeEventListener("resize", this.resize);
+      clearInterval(this._iid);
+      clearTimeout(this._oid);
+    }catch(e){
+    }  
   }
 
   resize() {
@@ -60,7 +64,7 @@ export default class Canvas extends React.Component {
     const height = window.innerHeight;
     canvas.width = width;
     canvas.height = height;
-
+    this.setCanvasSize(canvas);
     this.props.onResize && this.props.onResize(width, height);
   }
 
@@ -103,7 +107,8 @@ export default class Canvas extends React.Component {
         position: "absolute",
         zIndex: -1,
         top: 0,
-        left: 0
+        left: 0,
+        opacity: 0.8
       });
     } else if(bg && typeof bg === "object") {
       style = Object.assign(style, bg);
@@ -113,17 +118,12 @@ export default class Canvas extends React.Component {
   }
   render() {
     return (
-      <div>
         <canvas
           ref={this.canvasRef}
-          onMouseDown={this.handleMouseDown.bind(this)}
           onMouseMove={this.handleMouseMove.bind(this)}
-          onMouseUp={this.handleMouseUp.bind(this)}
           className="canvas"
           style={this.getStyle()}
-
         />
-      </div>
     );
   }
 }

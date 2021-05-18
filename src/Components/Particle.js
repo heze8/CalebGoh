@@ -6,12 +6,12 @@ import Canvas from "./Canvas";
 export default class Particles extends React.Component {
   constructor(props) {
     super(props);
+    this._mousedown = true;
 
     this.mouseInfo = {
       x: 1003 / 2,
       y: 610 / 2
     };
-    this._mousedown = false;
     this.renderProton = this.renderProton.bind(this);
   }
 
@@ -32,7 +32,7 @@ export default class Particles extends React.Component {
     const emitter = new Proton.Emitter();
     emitter.damping = 0.008;
 
-    emitter.rate = new Proton.Rate(200);
+    emitter.rate = new Proton.Rate(300);
     emitter.addInitialize(new Proton.Mass(1));
     emitter.addInitialize(new Proton.Radius(4));
     emitter.addInitialize(
@@ -101,10 +101,10 @@ export default class Particles extends React.Component {
     const context = canvas.getContext("2d");
     const renderer = new Proton.CanvasRenderer(canvas);
 
-    // renderer.onProtonUpdate = () => {
-    //   context.fillStyle = "rgba(0, 0, 0, 0.02)";
-    //   context.fillRect(0, 0, canvas.width, canvas.height);
-    // };
+    renderer.onProtonUpdate = () => {
+      context.fillStyle = "rgba(0, 0, 0, 0.12)";
+      context.fillRect(0, 0, canvas.width, canvas.height);
+    };
 
     renderer.onParticleUpdate = particle => {
       context.beginPath();
@@ -124,13 +124,11 @@ export default class Particles extends React.Component {
       new Proton.RectZone(0, 0, width, height),
       "cross"
     );
-
-    this.renderer.resize(width, height);
+    this.crossZoneBehaviour.zone.width = width;
+    this.crossZoneBehaviour.zone.height = height;
+    this.proton.renderers[0].resize(width, height);
   }
 
-  handleMouseDown(e) {
-    this._mousedown = true;
-  }
 
   handleMouseMove(e) {
     if (this._mousedown) {
@@ -142,17 +140,13 @@ export default class Particles extends React.Component {
         _x = e.offsetX;
         _y = e.offsetY;
       }
-
+      console.log(" " + _x + _y);
       this.mouseInfo.x = _x;
       this.mouseInfo.y = _y;
       this.repulsionBehaviour.reset(this.mouseInfo, 30, 500);
     }
   }
 
-  handleMouseUp(e) {
-    this._mousedown = false;
-    this.repulsionBehaviour.reset(this.mouseInfo, 0, 0);
-  }
 
   renderProton() {
     this.proton && this.proton.update();
@@ -160,16 +154,13 @@ export default class Particles extends React.Component {
 
   render() {
     return (
-        <React.Fragment>
         <Canvas
         bg = {true}
         globalCompositeOperation="darken"
-        onMouseDown={this.handleMouseDown.bind(this)}
         onMouseMove={this.handleMouseMove.bind(this)}
-        onMouseUp={this.handleMouseUp.bind(this)}
         onCanvasInited={this.handleCanvasInited.bind(this)}
         onResize={this.handleResize.bind(this)}
-      /></React.Fragment>
+      />
     );
   }
 }
